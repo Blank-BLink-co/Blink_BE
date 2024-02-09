@@ -1,5 +1,6 @@
 import requests
 import os
+from decouple import config
 
 from user.models import User
 from json.decoder import JSONDecodeError
@@ -17,7 +18,7 @@ from allauth.socialaccount.providers.kakao import views as kakao_view
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 
 
-state = os.environ.get("STATE")
+state = config('STATE')
 BASE_URL = 'http://localhost:8000/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'api/v1/user/google/callback/'
 
@@ -27,12 +28,14 @@ def google_login(request):
     Code Request
     """
     scope = "https://www.googleapis.com/auth/userinfo.email"
-    client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+    client_id = config('SOCIAL_AUTH_GOOGLE_CLIENT_ID')
     return redirect(f"https://accounts.google.com/o/oauth2/v2/auth?client_id={client_id}&response_type=code&redirect_uri={GOOGLE_CALLBACK_URI}&scope={scope}")
 
 def google_callback(request):
-    client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
-    client_secret = os.environ.get("SOCIAL_AUTH_GOOGLE_SECRET")
+    client_id = config('SOCIAL_AUTH_GOOGLE_CLIENT_ID')
+    client_secret = config('SOCIAL_AUTH_GOOGLE_SECRET')
+    # client_id = os.environ.get("SOCIAL_AUTH_GOOGLE_CLIENT_ID")
+    # client_secret = os.environ.get("SOCIAL_AUTH_GOOGLE_SECRET")
     code = request.GET.get('code')
     
     # 1. 받은 코드로 구굴에 access token 요청
@@ -144,13 +147,14 @@ class GoogleLogin(SocialLoginView):
 NAVER_CALLBACK_URI = BASE_URL + 'api/v1/user/naver/callback/'
 
 def naver_login(request):
-    print(NAVER_CALLBACK_URI)
-    client_id = os.environ.get("SOCIAL_AUTH_NAVER_CLIENT_ID")
+    client_id = config('SOCIAL_AUTH_NAVER_CLIENT_ID')
     return redirect(f"https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id={client_id}&state=STATE_STRING&redirect_uri={NAVER_CALLBACK_URI}")
 
 def naver_callback(request):
-    client_id = os.environ.get("SOCIAL_AUTH_NAVER_CLIENT_ID")
-    client_secret = os.environ.get("SOCIAL_AUTH_NAVER_SECRET")
+    client_id = config('SOCIAL_AUTH_NAVER_CLIENT_ID')
+    client_secret = config('SOCIAL_AUTH_NAVER_SECRET')
+    # client_id = os.environ.get("SOCIAL_AUTH_NAVER_CLIENT_ID")
+    # client_secret = os.environ.get("SOCIAL_AUTH_NAVER_SECRET")
     code = request.GET.get("code")
     state_string = request.GET.get("state")
 
@@ -253,11 +257,13 @@ class NaverLogin(SocialLoginView):
 KAKAO_CALLBACK_URI = BASE_URL + 'api/v1/user/kakao/callback/'
 
 def kakao_login(request):
-    client_id = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID")
+    # client_id = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID")
+    client_id = config('SOCIAL_AUTH_KAKAO_CLIENT_ID')
     return redirect(f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={KAKAO_CALLBACK_URI}&response_type=code&scope=account_email")
 
 def kakao_callback(request):
-    client_id = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID")
+    # client_id = os.environ.get("SOCIAL_AUTH_KAKAO_CLIENT_ID")
+    client_id = config('SOCIAL_AUTH_KAKAO_CLIENT_ID')
     code = request.GET.get("code")
 
     # code로 access token 요청
