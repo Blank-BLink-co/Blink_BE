@@ -19,7 +19,8 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 
 
 state = config('STATE')
-BASE_URL = 'http://localhost:8000/'
+# BASE_URL = 'http://localhost:8000/'
+BASE_URL = 'https://blink-dgu.com/'
 GOOGLE_CALLBACK_URI = BASE_URL + 'api/v1/user/google/callback/'
 
 # 구글 로그인
