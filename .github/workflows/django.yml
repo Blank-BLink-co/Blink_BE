@@ -30,6 +30,14 @@ jobs:
         echo DATABASE_USER_PASSWORD=${{ secrets.DATABASE_USER_PASSWORD }} >> .env
         echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .env
         echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
+        echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
+        echo SOCIAL_AUTH_GOOGLE_CLIENT_ID=${{ secrets.SOCIAL_AUTH_GOOGLE_CLIENT_ID }} >> .env
+        echo SOCIAL_AUTH_GOOGLE_SECRET=${{ secrets.SOCIAL_AUTH_GOOGLE_SECRET }} >> .env
+        echo SOCIAL_AUTH_KAKAO_CLIENT_ID=${{ secrets.SOCIAL_AUTH_KAKAO_CLIENT_ID }} >> .env
+        echo SOCIAL_AUTH_KAKAO_SECRET=${{ secrets.SOCIAL_AUTH_KAKAO_SECRET }} >> .env
+        echo SOCIAL_AUTH_NAVER_CLIENT_ID=${{ secrets.SOCIAL_AUTH_NAVER_CLIENT_ID }} >> .env
+        echo SOCIAL_AUTH_NAVER_SECRET=${{ secrets.SOCIAL_AUTH_NAVER_SECRET }} >> .env
+        echo STATE=${{ secrets.STATE }} >> .env
         cat .env
 
     - name: Set up Python 3.11

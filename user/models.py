@@ -6,7 +6,7 @@ def image_upload_path(instance, filename):
 
 class UserManager(BaseUserManager):
     # 일반 user
-    def create_user(self, email, nickname, isExpert, password):
+    def create_user(self, email, nickname, password):
         if not email:
             raise ValueError(('The Email must be set'))
         if not nickname:
@@ -16,7 +16,6 @@ class UserManager(BaseUserManager):
         user = self.model(
             email = email,
             nickname = nickname,
-            isExpert = isExpert,
         )
         user.set_password(password)
         user.save()
@@ -40,7 +39,7 @@ class User(AbstractUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     email = models.EmailField(default='', max_length=255, null=False, blank=True, unique=True)
     nickname = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
-    isExpert = models.BooleanField(default=False, blank=False, null=False)
+    isExpert = models.BooleanField(default=False, blank=True, null=True)
     profile_image = models.ImageField(default='default_profile_image.jpg', upload_to=image_upload_path, blank=True, null=True)
 
     is_active = models.BooleanField(default=True)    
@@ -49,7 +48,7 @@ class User(AbstractUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['isExpert', 'nickname']
+    REQUIRED_FIELDS = ['nickname']
 
     objects = UserManager()
 
