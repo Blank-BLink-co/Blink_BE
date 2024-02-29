@@ -18,5 +18,6 @@ urlpatterns = [
 
     path('signup', SignUpAPIView.as_view()),
     path('login', LoginAPIView.as_view()),
-
+    path('profile', ProfileViewSet.as_view()),
+    # path('determine', UserExpertDetermineAPIView.as_view()),
 ]

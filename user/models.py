@@ -6,16 +6,19 @@ def image_upload_path(instance, filename):
 
 class UserManager(BaseUserManager):
     # 일반 user
-    def create_user(self, email, nickname, password):
+    def create_user(self, email, nickname, password, isExpert):
         if not email:
             raise ValueError(('The Email must be set'))
         if not nickname:
             raise ValueError('must have user nickname')
+        if isExpert is None:
+            raise ValueError('no expert')
         
         email = self.normalize_email(email)
         user = self.model(
             email = email,
             nickname = nickname,
+            isExpert = isExpert
         )
         user.set_password(password)
         user.save()

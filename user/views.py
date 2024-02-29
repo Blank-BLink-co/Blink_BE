@@ -14,6 +14,7 @@ class SignUpAPIView(APIView):
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
+
         if serializer.is_valid():
             user = serializer.save()
         
@@ -22,7 +23,7 @@ class SignUpAPIView(APIView):
             access_token = str(token.access_token)
             res = Response(
                 {
-                    "user" : serializer.data,
+                    "user" : serializer.data['email'],
                     "message" : "Signup Successs!",
                     "token" : {
                         "access_token" : access_token,
@@ -71,17 +72,17 @@ class LoginAPIView(APIView):
         return Response({"message" : "가입되지 않은 사용자 혹은, 이외의 오류"}, status=status.HTTP_400_BAD_REQUEST)
 
 # 유저 전문가 판별
-class UserExpertDetermineAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+# class UserExpertDetermineAPIView(APIView):
+#     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        expert_status = request.data.get('Expert')
-        user = request.user
+#     def post(self, request):
+#         expert_status = request.data.get('expert')
+#         user = request.user
 
-        user.isExpert = expert_status
-        user.save()
+#         user.isExpert = expert_status
+#         user.save()
 
-        return Response({"success": "Expert status Update"}, status=status.HTTP_200_OK)
+#         return Response({"success": "Expert status Update"}, status=status.HTTP_200_OK)
         
 # 유저 프로필 조회
 class ProfileViewSet(generics.RetrieveUpdateAPIView):
