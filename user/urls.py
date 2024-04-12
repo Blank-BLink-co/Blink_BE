@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from .oauth import *
+from .views import *
 
 urlpatterns = [
+    # Social Login
     path('google/login', google_login, name='google_login'),
     path('google/callback/', google_callback, name='google_callback'),  
     path('google/login/finish/', GoogleLogin.as_view(), name='google_login_todjango'),
@@ -12,5 +14,9 @@ urlpatterns = [
 
     path('kakao/login', kakao_login, name='kakao_login'),
     path('kakao/callback/', kakao_callback, name='kakao_callback'),  
-    path('kakao/login/finish/', KakaoLogin.as_view(), name='kakao_login_todjango'),   
+    path('kakao/login/finish/', KakaoLogin.as_view(), name='kakao_login_todjango'),
+
+    path('signup', SignUpAPIView.as_view()),
+    path('login', LoginAPIView.as_view()),
+
 ]
